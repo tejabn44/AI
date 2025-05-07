@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bookstore Chatbot</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 50px;
+    }
+    .chatbox {
+      width: 350px;
+      height: 400px;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      padding: 10px;
+    }
+    .input-box {
+      margin-top: 10px;
+      display: flex;
+    }
+    input[type="text"] {
+      flex: 1;
+      padding: 10px;
+      border-radius: 5px 0 0 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 10px;
+      border: none;
+      background: #5c67f2;
+      color: white;
+      border-radius: 0 5px 5px 0;
+      cursor: pointer;
+    }
+    .msg {
+      margin: 5px 0;
+    }
+    .user { text-align: right; color: blue; }
+    .bot { text-align: left; color: green; }
+  </style>
+</head>
+<body>
+  <h2>📚 Bookstore Chatbot</h2>
+  <div class="chatbox" id="chatbox">
+    <div class="msg bot">Hello! I'm BookBot. How can I help you today?</div>
+  </div>
+  <div class="input-box">
+    <input type="text" id="userInput" placeholder="Type your message..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+  <script>
+    const chatbox = document.getElementById("chatbox");
+
+    function sendMessage() {
+      const input = document.getElementById("userInput");
+      const userMsg = input.value.trim();
+      if (userMsg === "") return;
+
+      appendMessage(userMsg, "user");
+      getBotResponse(userMsg.toLowerCase());
+      input.value = "";
+    }
+
+    function appendMessage(msg, sender) {
+      const msgDiv = document.createElement("div");
+      msgDiv.classList.add("msg", sender);
+      msgDiv.textContent = msg;
+      chatbox.appendChild(msgDiv);
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+
+    function getBotResponse(input) {
+      let response = "I'm sorry, I didn't understand that.";
+
+      if (input.includes("hello") || input.includes("hi")) {
+        response = "Hi there! How can I assist you today?";
+      } else if (input.includes("hours") || input.includes("open")) {
+        response = "We are open from 9 AM to 9 PM, Monday to Saturday.";
+      } else if (input.includes("book") || input.includes("available")) {
+        response = "We have a wide range of books! Can you specify the title or author?";
+      } else if (input.includes("contact") || input.includes("phone")) {
+        response = "You can reach us at (123) 456-7890.";
+      } else if (input.includes("bye")) {
+        response = "Goodbye! Have a great day!";
+      }
+
+      appendMessage(response, "bot");
+    }
+  </script>
+</body>
+</html>
