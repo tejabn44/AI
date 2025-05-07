@@ -1,0 +1,2 @@
+# AI
+ai_prac
